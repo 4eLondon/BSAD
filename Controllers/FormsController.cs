@@ -4,30 +4,38 @@ using BSAD_web.Models;
 
 namespace BSAD_web.Controllers;
 
-public class HomeController : Controller
+public class FormsController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<FormsController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public FormsController(ILogger<FormsController> logger)
     {
         _logger = logger;
     }
 
-    // Website General Pages
-    public IActionResult Index() // Renders Home page
+    // Website Form Pages
+    public IActionResult Register() // Renders Registeration Page
     {
         return View();
     }
 
-    public IActionResult Privacy() // Renders Privacy page
+    public IActionResult Login() // Renders Login Page
+
     {
         return View();
     }
 
-    public IActionResult Contact() // Renders Contact page
+    public IActionResult ForgotPassword() // Renders Forget Password Prompt
+
     {
         return View();
     }
+    public IActionResult Application() // Renders Application
+
+    {
+        return View();
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

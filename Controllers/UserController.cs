@@ -4,27 +4,17 @@ using BSAD_web.Models;
 
 namespace BSAD_web.Controllers;
 
-public class HomeController : Controller
+public class UserController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<UserController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public UserController(ILogger<UserController> logger)
     {
         _logger = logger;
     }
 
-    // Website General Pages
-    public IActionResult Index() // Renders Home page
-    {
-        return View();
-    }
-
-    public IActionResult Privacy() // Renders Privacy page
-    {
-        return View();
-    }
-
-    public IActionResult Contact() // Renders Contact page
+    // Website User Pages
+    public IActionResult Dashboard() // Renders User Dashboard
     {
         return View();
     }
