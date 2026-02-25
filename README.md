@@ -4,13 +4,14 @@
 - [x] **Create Initial setup**
 
   - [] *Pages*
-    - [] Home page
-    - [] Registeration
-    - [] Login
+    - [x] Home page
+    - [x] Registeration
+    - [x] Login
     - [] Contact
-    - [] Forgot password
+    - [x] Forgot password
+    - [x] Forgot username
     - [] User dashboard
-    - [] Form/Application
+    - [x] Form/Application
 
   - [] *Database*
     - [] User datatable
@@ -32,7 +33,7 @@
       - [] Change username system
       - [] Change password system
 
-  -[] *Application Process*
+  - [] *Application Process*
       - [] Taking data from Application forms
       - [] Save incomplete form data for revival
       - [] Update Database with Application data
