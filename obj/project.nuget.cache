@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "WvggFpQDuGI=",
+  "success": true,
+  "projectFilePath": "/home/london/Documents/Projects/Web/BSAD_web/BSAD_web.csproj",
+  "expectedPackageFiles": [
+    "/home/london/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.12/microsoft.aspnetcore.app.ref.9.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
