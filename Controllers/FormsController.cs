@@ -20,18 +20,20 @@ public class FormsController : Controller
     }
 
     public IActionResult Login() // Renders Login Page
-
     {
         return View();
     }
 
     public IActionResult ForgotPassword() // Renders Forget Password Prompt
+    {
+        return View();
+    }
 
+    public IActionResult ForgotUsername() // Renders Forget Password Prompt
     {
         return View();
     }
     public IActionResult Application() // Renders Application
-
     {
         return View();
     }
