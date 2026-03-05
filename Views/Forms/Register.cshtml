@@ -1,3 +1,4 @@
+@model BSAD_web.Models.RegisterModel
 
 <!--Used For Tab title-->
 @{
@@ -9,32 +10,33 @@
 <img src="" alt"image">
 
 <!--Registration form-->
-<form>
+<form method="post">
 
   <div>
-    <input placeholder="First name">
-    <span>First error</span>
-    <input placeholder="Last name">
-    <span>Last error</span>
+    <input asp-for="Firstname" placeholder="First name">
+    <span asp-validation-for="Firstname" style="color:red"></span>
+
+    <input asp-for="Lastname" placeholder="Last name">
+    <span asp-validation-for="Lastname" style="color:red"></span>
   </div>
 
   <div>
-    <input placeholder="username">
-    <span>User error</span>
+    <input asp-for="Username" placeholder="Username">
+    <span asp-validation-for="Username" style="color:red"></span>
   </div>
 
   <div>
-    <input placeholder="Email">
-    <span>Email error</span>
+    <input asp-for="Email" placeholder="Email">
+    <span asp-validation-for="Email" style="color:red"></span>
   </div>
 
   <div>
-    <input placeholder="Password">
-    <span>Pass error</span>
-    <input placeholder="Confirm Password">
-    <span>ConPass error</span>
-  </div>
+    <input asp-for="Password" placeholder="Password">
+    <span asp-validation-for="Password" style="color:red"></span>
 
+  <input asp-for="Confirmpassword" placeholder="Confirm Password">
+    <span asp-validation-for="Confirmpassword" style="color:red"></span>
+  </div>
 
   <button type="submit">Register</button>
 </form>
@@ -42,3 +44,7 @@
 
 <!--Lead to Login-->
 <p>Already have an account? <a asp-action="Login">Log in</a></p>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

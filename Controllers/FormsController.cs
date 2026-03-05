@@ -12,7 +12,6 @@ public class FormsController : Controller
     {
         _logger = logger;
     }
-
     // Website Form Pages
     public IActionResult Register() // Renders Registeration Page
     {
@@ -37,7 +36,6 @@ public class FormsController : Controller
     {
         return View();
     }
-
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

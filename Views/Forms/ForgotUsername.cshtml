@@ -1,3 +1,4 @@
+@model BSAD_Web.Models.ForgotUsernameModel
 
 @{
 ViewData["Title"] = "Change Username";
@@ -7,15 +8,15 @@ ViewData["Title"] = "Change Username";
 <form>
 
  <div>
-    <input placeholder="First name">
-    <span></span>
-    <input placeholder="Last name">
-    <span></span>
+    <input asp-for="Firstname" placeholder="First name">
+    <span asp-validation-for="Firstname"></span>
+    <input asp-for="Lastname" placeholder="Last name">
+    <span asp=validation-for='Lastname'></span>
   </div>
 
   <div>
-    <input placeholder="Email">
-    <span></span>
+    <input asp-for="Email" placeholder="Email">
+    <span asp-validation-for="Email"></span>
   </div>
 
   <button type="submit">Confim</a></button>
@@ -26,8 +27,8 @@ ViewData["Title"] = "Change Username";
 <form>
 
   <div>
-    <input placeholder="New Username">
-    <span></span>
+    <input asp-for="NewUsername" placeholder="New Username">
+    <span asp-validation-for="NewUsername"></span>
   </div>
 
   <button type="submit"><a asp-controller="Forms" asp-action="Login">Log in</a></button>
