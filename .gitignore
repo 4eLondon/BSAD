@@ -1,1 +1,19 @@
+<<<<<<< HEAD
 /obj
+=======
+# Build results
+/bin/
+/obj/
+
+# User-specific files
+appsettings.Development.json
+launchSettings.json
+*.user
+
+# NuGet packages
+packages/
+
+# OS files
+.DS_Store
+Thumbs.db
+>>>>>>> 16ec04c1016ce276fbb8661c6227548cb09bb782

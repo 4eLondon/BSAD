@@ -1,0 +1,33 @@
+@model BSAD_web.Models.LoginModel
+
+@{
+ViewData["Title"] = "Log in";
+}
+
+<!-- Side panel display-->
+<h1>Log in</h1>
+<img src="" alt="">
+
+<!-- Login form -->
+<form>
+
+  <div>
+    <input placeholder="Username">
+    <span></span>
+  </div>
+
+  <div>
+    <input placeholder="Password">
+    <span></span>
+  </div>
+
+  <button type="submit">Log in</button>
+</form>
+<br>
+
+<!-- Links -->
+<p>Don't have and account? <a asp-controller="Forms" asp-action="Register">Register now</a></p>
+<a asp-controller="Forms" asp-action="ForgotPassword">Forgot your Password?</a>
+<br>
+<a asp-controller="Forms" asp-action="ForgotUsername">Forgot your Username?</a>
+

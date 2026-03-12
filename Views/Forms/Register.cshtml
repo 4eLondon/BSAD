@@ -1,0 +1,50 @@
+@model BSAD_web.Models.RegisterModel
+
+<!--Used For Tab title-->
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<!--Side panel display-->
+<h1>Register</h1>
+<img src="" alt"image">
+
+<!--Registration form-->
+<form method="post">
+
+  <div>
+    <input asp-for="Firstname" placeholder="First name">
+    <span asp-validation-for="Firstname" style="color:red"></span>
+
+    <input asp-for="Lastname" placeholder="Last name">
+    <span asp-validation-for="Lastname" style="color:red"></span>
+  </div>
+
+  <div>
+    <input asp-for="Username" placeholder="Username">
+    <span asp-validation-for="Username" style="color:red"></span>
+  </div>
+
+  <div>
+    <input asp-for="Email" placeholder="Email">
+    <span asp-validation-for="Email" style="color:red"></span>
+  </div>
+
+  <div>
+    <input asp-for="Password" placeholder="Password">
+    <span asp-validation-for="Password" style="color:red"></span>
+
+  <input asp-for="Confirmpassword" placeholder="Confirm Password">
+    <span asp-validation-for="Confirmpassword" style="color:red"></span>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+<br>
+
+<!--Lead to Login-->
+<p>Already have an account? <a asp-action="Login">Log in</a></p>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
