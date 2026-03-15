@@ -1,6 +1,6 @@
 # Build results
-/bin/
-/obj/
+bin/
+obj/
 
 # User-specific files
 appsettings.Development.json
@@ -13,3 +13,23 @@ packages/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Secrets & environment
+appsettings.*.json
+!appsettings.json
+secrets.json
+.env
+.env.*
+
+# dotnet user-secrets (stored outside project, but just in case)
+*.secrets.json
+
+# Rider / VS Code / Visual Studio
+.idea/
+.vscode/
+*.suo
+*.sln.docstates
+
+# Logs
+*.log
+logs/
