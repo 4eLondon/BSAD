@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj
 =======
 # Build results
@@ -17,3 +18,8 @@ packages/
 .DS_Store
 Thumbs.db
 >>>>>>> 16ec04c1016ce276fbb8661c6227548cb09bb782
+=======
+.env
+node_modules/
+.git/
+>>>>>>> pages

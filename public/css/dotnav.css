@@ -1,0 +1,136 @@
+/* ============================================================
+   dotnav.css — Road Ready JA
+   Persistent dot nav + topbar, merged into one file.
+   Dots always show their label. Hover animates the dot only —
+   the invisible hitbox stays full size so clicks always register.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #1a1a1a;
+  --surface: #242424;
+  --border: #3a3a3a;
+  --accent: #f0d316;
+  --text-muted: #8a857e;
+  --font-mono: "IBM Plex Mono", monospace;
+  --tr: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --topbar-h: 52px;
+}
+
+/* ── Topbar ──────────────────────────────────────────────── */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--topbar-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 200;
+}
+
+.topbar__brand {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.topbar__back {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color var(--tr);
+}
+.topbar__back:hover {
+  color: var(--accent);
+}
+
+/* ── Dot nav ─────────────────────────────────────────────── */
+.dot-nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: var(--topbar-h); /* sits inside the topbar row */
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  z-index: 300; /* above topbar */
+}
+
+/* Each item is a stacked dot + label */
+.dot-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+}
+
+/*
+ * The anchor fills a large invisible hit area so the link
+ * always registers regardless of how small the visible dot gets.
+ * The visible dot is a ::before pseudo-element that animates.
+ */
+.dot-nav__dot {
+  /* Large invisible hitbox */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  text-decoration: none;
+  cursor: pointer;
+  /* No background, no border — purely a click target */
+}
+
+/* Visible dot drawn as ::before so it can scale independently */
+.dot-nav__dot::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+  background: var(--border);
+  border: 1px solid var(--text-muted);
+  transition:
+    background var(--tr),
+    border-color var(--tr),
+    transform var(--tr);
+  /* scale does NOT affect the anchor's clickable area */
+}
+
+.dot-nav__dot:hover::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.5);
+}
+
+/* Persistent label — always visible, no opacity toggle */
+.dot-nav__label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color var(--tr);
+  line-height: 2;
+}
+
+.dot-nav__item:hover .dot-nav__label {
+  color: var(--accent);
+}

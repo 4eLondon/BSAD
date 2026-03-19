@@ -1,0 +1,366 @@
+/* ============================================================
+   auth.css — Road Ready JA
+   Panel slide animation:
+     Register → yellow panel LEFT,  form RIGHT
+     Login    → yellow panel RIGHT, form LEFT
+   Both panels are absolutely positioned children of .card
+   so they can cross over each other during the slide.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap");
+
+/* ── Variables ───────────────────────────────────────────── */
+:root {
+  --bg: #1a1a1a;
+  --surface: #242424;
+  --surface-2: #2e2e2e;
+  --border: #3a3a3a;
+  --accent: #f0d316;
+  --accent-dim: #f0b026;
+  --text: #e8e3dc;
+  --text-muted: #8a857e;
+  --text-subtle: #5a5550;
+  --error: #e05555;
+  --success: #4caf87;
+  --font-ui: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --slide-dur: 0.5s;
+  --slide-ease: cubic-bezier(0.77, 0, 0.18, 1);
+  --panel-w: 300px; /* yellow panel width */
+}
+
+/* ── Reset & Base ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  padding-top: 52px;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  width: 780px;
+  min-height: 480px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  position: relative; /* anchor for absolute children */
+  overflow: hidden;
+}
+
+/* ════════════════════════════════════════════════════════════
+   YELLOW PANEL
+   Absolutely positioned so it can slide freely across the card.
+   Register state: sits on the LEFT  (left: 0)
+   Login state:    sits on the RIGHT (left: calc(100% - 300px))
+   ════════════════════════════════════════════════════════════ */
+.panel-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--panel-w);
+  background: var(--accent);
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  overflow: hidden;
+  z-index: 2;
+  transition: left var(--slide-dur) var(--slide-ease);
+}
+
+/* Login: slide panel to the right edge */
+.card.is-login .panel-left {
+  left: calc(100% - var(--panel-w));
+}
+
+/* Grid texture */
+.panel-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(0, 0, 0, 0.07) 39px,
+      rgba(0, 0, 0, 0.07) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(0, 0, 0, 0.05) 39px,
+      rgba(0, 0, 0, 0.05) 40px
+    );
+  pointer-events: none;
+}
+
+/* Brand */
+.brand {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Centred message */
+.panel-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.panel-msg {
+  text-align: center;
+}
+.panel-msg h2 {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.panel-msg p {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 28px;
+}
+.panel-msg--hidden {
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════════════
+   DARK FORM PANEL
+   Also absolutely positioned, same height as the card.
+   Register: form on the RIGHT → left: 300px
+   Login:    form on the LEFT  → left: 0
+   Width fills the remaining space (calc(100% - 300px)).
+   ════════════════════════════════════════════════════════════ */
+.panel-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--panel-w);
+  width: calc(100% - var(--panel-w));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 50px;
+  background: var(--bg);
+  z-index: 1;
+  transition: left var(--slide-dur) var(--slide-ease);
+}
+
+/* Login: form shifts to the left */
+.card.is-login .panel-right {
+  left: 0;
+}
+
+/* Card needs an explicit height so absolute children have
+   something to fill — min-height alone isn't enough */
+.card::after {
+  content: "";
+  display: block;
+  min-height: 480px;
+}
+
+/* ── Form Wrappers ───────────────────────────────────────── */
+.form-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  animation: formFadeIn 0.35s ease both;
+  animation-delay: 0.15s;
+}
+.form-wrap--hidden {
+  display: none;
+}
+
+@keyframes formFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-wrap h1 {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Fields ──────────────────────────────────────────────── */
+.field {
+  width: 100%;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.field__icon {
+  display: none;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+.field input:focus {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+.field input::placeholder {
+  color: var(--text-subtle);
+}
+
+/* ── Field errors ────────────────────────────────────────── */
+.field-error {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--error);
+  margin-top: 0.3rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Forgot link ─────────────────────────────────────────── */
+.forgot-link {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+  margin-top: -0.4rem;
+  letter-spacing: 0.04em;
+  transition: color var(--transition);
+}
+.forgot-link:hover {
+  color: var(--accent);
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.68rem 1.8rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    transform 0.1s;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  color: #1a1a1a;
+}
+.btn--outline:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.btn-main {
+  background: var(--accent);
+  color: #1a1a1a;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+.btn-main:hover {
+  background: var(--accent-dim);
+}
+.btn-main:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Toast ───────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 12px 28px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  z-index: 999;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toast--success {
+  background: var(--success);
+  color: #fff;
+}
+.toast--error {
+  background: var(--error);
+  color: #fff;
+}
+.toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
