@@ -5,7 +5,7 @@ const app = express();
 app.use(express.static("public"));
 
 // Views
-app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
+app.get("/", (req, res) => res.sendFile(__dirname + "index.html"));
 app.get("/auth", (req, res) =>
   res.sendFile(__dirname + "/views/user/auth.html"),
 );
