@@ -3,7 +3,6 @@
  *
  * Handles:
  *  1. Panel slide + form fade when switching register ↔ login
- *     — adds/removes .is-login on #card, CSS does the animation
  *  2. ?mode=login URL param
  *  3. Password match validation
  *  4. Supabase Auth sign-up and sign-in
@@ -11,51 +10,42 @@
 
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-const SUPABASE_URL      = "https://pyglxkfdenmvywbbnfui.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_AbtdIDVEEoU51BbgdQsN2A_D2yD4VC1";
+const SUPABASE_URL = "https://pyglxkfdenmvywbbnfui.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY"; // ← replace with your real key from Supabase dashboard
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-
 // ── Elements ───────────────────────────────────────────────
-const card         = document.getElementById("card");
-const msgRegister  = document.getElementById("msg-register");
-const msgLogin     = document.getElementById("msg-login");
+const card = document.getElementById("card");
+const msgRegister = document.getElementById("msg-register");
+const msgLogin = document.getElementById("msg-login");
 const formRegister = document.getElementById("form-register");
-const formLogin    = document.getElementById("form-login");
-const goLoginBtn   = document.getElementById("go-login");
-const goRegBtn     = document.getElementById("go-register");
-const signupBtn    = document.getElementById("signup-btn");
+const formLogin = document.getElementById("form-login");
+const goLoginBtn = document.getElementById("go-login");
+const goRegBtn = document.getElementById("go-register");
+const signupBtn = document.getElementById("signup-btn");
 
-const regName     = formRegister.querySelector('input[type="text"]');
-const regEmail    = formRegister.querySelector('input[type="email"]');
+const regName = formRegister.querySelector('input[type="text"]');
+const regEmail = formRegister.querySelector('input[type="email"]');
 const regPassword = formRegister.querySelectorAll('input[type="password"]')[0];
-const regConfirm  = formRegister.querySelectorAll('input[type="password"]')[1];
-const loginEmail    = formLogin.querySelector('input[type="email"]');
+const regConfirm = formRegister.querySelectorAll('input[type="password"]')[1];
+const loginEmail = formLogin.querySelector('input[type="email"]');
 const loginPassword = formLogin.querySelector('input[type="password"]');
-
 
 // ── Panel slide helpers ────────────────────────────────────
 
 function showLogin() {
-  // Trigger CSS slide by toggling class on the card
   card.classList.add("is-login");
-
-  // Swap visible messages on the panel
   msgRegister.classList.add("panel-msg--hidden");
   msgLogin.classList.remove("panel-msg--hidden");
-
-  // Swap forms — short delay so form appears after slide starts
   formRegister.classList.add("form-wrap--hidden");
   setTimeout(() => formLogin.classList.remove("form-wrap--hidden"), 120);
 }
 
 function showRegister() {
   card.classList.remove("is-login");
-
   msgLogin.classList.add("panel-msg--hidden");
   msgRegister.classList.remove("panel-msg--hidden");
-
   formLogin.classList.add("form-wrap--hidden");
   setTimeout(() => formRegister.classList.remove("form-wrap--hidden"), 120);
 }
@@ -64,14 +54,12 @@ goLoginBtn.addEventListener("click", showLogin);
 goRegBtn.addEventListener("click", showRegister);
 
 if (new URLSearchParams(window.location.search).get("mode") === "login") {
-  // Instant on load — skip animation
   card.classList.add("is-login");
   msgRegister.classList.add("panel-msg--hidden");
   msgLogin.classList.remove("panel-msg--hidden");
   formRegister.classList.add("form-wrap--hidden");
   formLogin.classList.remove("form-wrap--hidden");
 }
-
 
 // ── Error helpers ──────────────────────────────────────────
 
@@ -81,19 +69,21 @@ function setError(input, message) {
   input.style.borderColor = message ? "var(--error)" : "";
   if (message) {
     const err = document.createElement("span");
-    err.className   = "field-error";
+    err.className = "field-error";
     err.textContent = message;
     input.parentElement.appendChild(err);
   }
 }
 
 function clearAllErrors() {
-  document.querySelectorAll(".field-error").forEach(el => el.remove());
-  document.querySelectorAll(".field input").forEach(el => el.style.borderColor = "");
+  document.querySelectorAll(".field-error").forEach((el) => el.remove());
+  document
+    .querySelectorAll(".field input")
+    .forEach((el) => (el.style.borderColor = ""));
 }
 
 function setButtonLoading(btn, loading) {
-  btn.disabled    = loading;
+  btn.disabled = loading;
   btn.textContent = loading ? "Please wait…" : btn.dataset.label;
 }
 
@@ -101,7 +91,7 @@ function showToast(message, type = "success") {
   const existing = document.getElementById("toast");
   if (existing) existing.remove();
   const toast = document.createElement("div");
-  toast.id        = "toast";
+  toast.id = "toast";
   toast.textContent = message;
   toast.className = `toast toast--${type}`;
   document.body.appendChild(toast);
@@ -112,7 +102,6 @@ function showToast(message, type = "success") {
   }, 4000);
 }
 
-
 // ── Registration ───────────────────────────────────────────
 
 signupBtn.dataset.label = signupBtn.textContent;
@@ -120,32 +109,50 @@ signupBtn.dataset.label = signupBtn.textContent;
 signupBtn.addEventListener("click", async () => {
   clearAllErrors();
 
-  const name     = regName.value.trim();
-  const email    = regEmail.value.trim();
+  const name = regName.value.trim();
+  const email = regEmail.value.trim();
   const password = regPassword.value;
-  const confirm  = regConfirm.value;
+  const confirm = regConfirm.value;
 
   let hasError = false;
-  if (!name)    { setError(regName,     "Full name is required.");        hasError = true; }
-  if (!email)   { setError(regEmail,    "Email is required.");            hasError = true; }
-  if (!password){ setError(regPassword, "Password is required.");         hasError = true; }
+  if (!name) {
+    setError(regName, "Full name is required.");
+    hasError = true;
+  }
+  if (!email) {
+    setError(regEmail, "Email is required.");
+    hasError = true;
+  }
+  if (!password) {
+    setError(regPassword, "Password is required.");
+    hasError = true;
+  }
   if (password && password.length < 6) {
-                  setError(regPassword, "Minimum 6 characters.");         hasError = true; }
+    setError(regPassword, "Minimum 6 characters.");
+    hasError = true;
+  }
   if (password && confirm && password !== confirm) {
-                  setError(regConfirm,  "Passwords do not match.");       hasError = true; }
+    setError(regConfirm, "Passwords do not match.");
+    hasError = true;
+  }
   if (hasError) return;
 
   setButtonLoading(signupBtn, true);
 
   const { data: authData, error: authError } = await supabase.auth.signUp({
-    email, password, options: { data: { name } },
+    email,
+    password,
+    options: { data: { name } },
   });
 
   setButtonLoading(signupBtn, false);
 
   if (authError) {
     const dup = authError.message.toLowerCase().includes("already registered");
-    setError(regEmail, dup ? "An account with this email already exists." : authError.message);
+    setError(
+      regEmail,
+      dup ? "An account with this email already exists." : authError.message,
+    );
     return;
   }
 
@@ -156,10 +163,9 @@ signupBtn.addEventListener("click", async () => {
   showLogin();
 });
 
-[regName, regEmail, regPassword, regConfirm].forEach(input => {
+[regName, regEmail, regPassword, regConfirm].forEach((input) => {
   input.addEventListener("input", () => setError(input, ""));
 });
-
 
 // ── Login ──────────────────────────────────────────────────
 
@@ -169,11 +175,17 @@ signinBtn.dataset.label = signinBtn.textContent;
 signinBtn.addEventListener("click", async () => {
   clearAllErrors();
 
-  const email    = loginEmail.value.trim();
+  const email = loginEmail.value.trim();
   const password = loginPassword.value;
 
-  if (!email)    { setError(loginEmail,    "Email is required.");    return; }
-  if (!password) { setError(loginPassword, "Password is required."); return; }
+  if (!email) {
+    setError(loginEmail, "Email is required.");
+    return;
+  }
+  if (!password) {
+    setError(loginPassword, "Password is required.");
+    return;
+  }
 
   setButtonLoading(signinBtn, true);
 
@@ -187,9 +199,11 @@ signinBtn.addEventListener("click", async () => {
   }
 
   showToast("Welcome back! Redirecting…");
-  setTimeout(() => { window.location.href = "/dashboard"; }, 1200);
+  setTimeout(() => {
+    window.location.href = "/pages/dashboard.html"; // ← fixed from /dashboard
+  }, 1200);
 });
 
-[loginEmail, loginPassword].forEach(input => {
+[loginEmail, loginPassword].forEach((input) => {
   input.addEventListener("input", () => setError(input, ""));
 });

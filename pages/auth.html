@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log In / Register</title>
-    <link rel="stylesheet" href="../../public/css/auth.css" />
-    <link rel="stylesheet" href="../../public/css/dotnav.css" />
+    <title>Log In / Register — Road Ready JA</title>
+    <link rel="stylesheet" href="/public/css/auth.css" />
+    <link rel="stylesheet" href="/public/css/dotnav.css" />
   </head>
 
   <body>
@@ -16,41 +16,40 @@
         <span class="dot-nav__label">Home</span>
       </div>
       <div class="dot-nav__item">
-        <a class="dot-nav__dot" href="../../index.html#about"></a>
+        <a class="dot-nav__dot" href="/#about"></a>
         <span class="dot-nav__label">About Us</span>
       </div>
       <div class="dot-nav__item">
-        <a class="dot-nav__dot" href="../../index.html#contact"></a>
+        <a class="dot-nav__dot" href="/#contact"></a>
         <span class="dot-nav__label">Contact</span>
       </div>
     </nav>
 
     <!-- Top bar -->
     <nav class="topbar">
-      <img src="../../public/images/logo.png" style="width:160px;height:auto">
+      <img src="/public/images/logo.png" style="width: 160px; height: auto" />
     </nav>
 
     <div class="card" id="card">
       <!-- LEFT PANEL -->
       <div class="panel panel-left">
         <div class="brand">
-          <span>Road ready JA</span>
+          <span>Road Ready JA</span>
         </div>
 
         <div class="panel-content">
           <!-- Register state -->
           <div class="panel-msg" id="msg-register">
-            <h2>Get registered</h2>
+            <h2>Get Registered</h2>
             <p>
-              In our to use our services<br />Plese sign up with your persou
-              info
+              To use our services<br />please sign up with your personal info
             </p>
-            <button class="btn btn--outline" id="go-login">to Log in</button>
+            <button class="btn btn--outline" id="go-login">to Log In</button>
           </div>
 
           <!-- Login state -->
           <div class="panel-msg panel-msg--hidden" id="msg-login">
-            <h2>Welcome User</h2>
+            <h2>Welcome Back</h2>
             <p>
               Enter your details to log in.<br />
               We are ready for you
@@ -67,14 +66,6 @@
         <!-- Register Form -->
         <div class="form-wrap" id="form-register">
           <h1>Create Account</h1>
-          <!--
-          <div class="socials">
-            <button class="social-btn" title="Facebook">f</button>
-            <button class="social-btn" title="Google+">G+</button>
-            <button class="social-btn" title="LinkedIn">in</button>
-          </div>
-          <p class="divider-text">or use your email for registration</p>
-          --->
 
           <div class="field">
             <input type="text" placeholder="Full Name" />
@@ -96,15 +87,6 @@
         <div class="form-wrap form-wrap--hidden" id="form-login">
           <h1>Sign In</h1>
 
-          <!--
-          <div class="socials">
-            <button class="social-btn" title="Facebook">f</button>
-            <button class="social-btn" title="Google+">G+</button>
-            <button class="social-btn" title="LinkedIn">in</button>
-          </div>
-          <p class="divider-text">or use your account</p>
-          -->
-
           <div class="field">
             <input type="email" placeholder="Email" />
           </div>
@@ -112,12 +94,14 @@
             <input type="password" placeholder="Password" />
           </div>
 
-          <a class="forgot-link" href="forgot.html">Forgot your password?</a>
+          <a class="forgot-link" href="/pages/forgot.html"
+            >Forgot your password?</a
+          >
           <button class="btn btn-main">Sign In</button>
         </div>
       </div>
     </div>
 
-    <script type="module" src="../../public/js/auth.js"></script>
+    <script type="module" src="/public/js/auth.js"></script>
   </body>
 </html>

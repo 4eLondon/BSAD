@@ -1,29 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Road Ready JA — Digitally Driving Forward</title>
   <link rel="stylesheet" href="/public/css/style.css" />
-  <!-- Leaflet — free, no API key required -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
-<body>
 
+<body>
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="nav-left">
-      <img src="public/images/logo.png" style="width:160px;height:auto">
+      <img src="/public/images/logo.png" style="width: 160px; height: auto" />
     </div>
     <ul class="nav-center">
       <li><a href="#home">Home</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About Us</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="views/user/dashboard.html">Dashboard</a></li>
+      <li><a href="/pages/dashboard.html">Dashboard</a></li>
     </ul>
     <div class="nav-right">
-      <button class="login" onclick="window.location.href='../views/user/auth.html'">
+      <button class="login" onclick="window.location.href = '/pages/auth.html'">
         Login / Register
       </button>
     </div>
@@ -36,15 +36,16 @@
       <h1>Are you road ready<span>?</span></h1>
       <p class="hero-sub">
         RoadReady JA simplifies Jamaica's driver's licence process — apply,
-        renew, and verify your licence entirely online. No queues, no wasted trips.
+        renew, and verify your licence entirely online. No queues, no wasted
+        trips.
       </p>
       <div class="welcome-buttons">
-        <button class="btn-outline"
-          onclick="window.location.href='../views/forms/application.html'">
+        <button class="btn-outline" onclick="window.location.href = '/pages/application.html'">
           Apply for a Licence
         </button>
-        <button class="btn-outline"
-          onclick="window.location.href='../views/forms/application.html?type=renew'">
+        <button class="btn-outline" onclick="
+              window.location.href = '/pages/application.html?type=renew'
+            ">
           Renewals &amp; Replacements
         </button>
       </div>
@@ -57,7 +58,10 @@
       <div class="map-section__text">
         <span class="section-eyebrow">Your Location</span>
         <h2>Find a TAJ Office Near You</h2>
-        <p>Enable location access to see where you are. TAJ offices across Jamaica handle in-person requirements.</p>
+        <p>
+          Enable location access to see where you are. TAJ offices across
+          Jamaica handle in-person requirements.
+        </p>
       </div>
       <div class="map-section__status">
         <div class="map-status" id="map-status">
@@ -71,8 +75,8 @@
       <div id="map"></div>
       <button class="map-locate-btn" id="locate-btn" title="Re-centre on my location">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+          <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5" />
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
         </svg>
         Re-centre
       </button>
@@ -88,7 +92,6 @@
     </div>
 
     <div class="service-cards">
-
       <div class="service-card">
         <div class="service-card__num">01</div>
         <h3>New Licence Application</h3>
@@ -96,8 +99,7 @@
           Apply for your driver's licence online. Submit your details, upload
           supporting documents, and track your application from anywhere.
         </p>
-        <a class="service-card__link"
-           href="../views/forms/application.html">Apply now →</a>
+        <a class="service-card__link" href="/pages/application.html">Apply now →</a>
       </div>
 
       <div class="service-card">
@@ -107,8 +109,7 @@
           Renew an expiring licence or request a replacement for a lost or
           damaged one. Pay online and receive confirmation immediately.
         </p>
-        <a class="service-card__link"
-           href="../views/forms/application.html?type=renew">Renew now →</a>
+        <a class="service-card__link" href="/pages/application.html?type=renew">Renew now →</a>
       </div>
 
       <div class="service-card">
@@ -118,10 +119,8 @@
           An e-Licence stored securely in your account — tamper-resistant,
           always accessible, and accepted as valid proof during traffic stops.
         </p>
-        <a class="service-card__link"
-           href="../views/user/auth.html">Sign in →</a>
+        <a class="service-card__link" href="/pages/auth.html">Sign in →</a>
       </div>
-
     </div>
   </section>
 
@@ -142,13 +141,18 @@
       <div class="step">
         <div class="step-num">02</div>
         <h4>Submit Your Application</h4>
-        <p>Fill in the online form, upload your documents, and make payment.</p>
+        <p>
+          Fill in the online form, upload your documents, and make payment.
+        </p>
       </div>
       <div class="step-arrow">→</div>
       <div class="step">
         <div class="step-num">03</div>
         <h4>Receive Your e-Licence</h4>
-        <p>Your digital licence is issued directly to your account — no office visit required.</p>
+        <p>
+          Your digital licence is issued directly to your account — no office
+          visit required.
+        </p>
       </div>
     </div>
   </section>
@@ -156,11 +160,14 @@
   <!-- ===== ABOUT ===== -->
   <section class="about" id="about">
     <div class="about__image-col">
-      <div class="about__image" style="background: url('../public/images/back3.webp') center/cover no-repeat;"></div>
+      <div class="about__image" style="
+            background: url(&quot;/public/images/back3.webp&quot;) center/cover
+              no-repeat;
+          "></div>
     </div>
     <div class="about__text-col">
       <span class="section-eyebrow">About RoadReady JA</span>
-      <h2>Removing Roadblocks,<br>One Click at a Time</h2>
+      <h2>Removing Roadblocks,<br />One Click at a Time</h2>
       <p>
         RoadReady JA was founded on 23 February 2026 by Management Information
         Systems students who saw a clear need: Jamaica's public services were
@@ -173,8 +180,8 @@
         they need, securely and without delay.
       </p>
       <blockquote class="about__mission">
-        "To provide digital technology that simplifies and improves
-        everyday business processes."
+        "To provide digital technology that simplifies and improves everyday
+        business processes."
       </blockquote>
     </div>
   </section>
@@ -192,8 +199,8 @@
     <div class="vm-card vm-card--accent">
       <span class="vm-card__label">Our Mission</span>
       <p>
-        To provide digital technology that simplifies and improves
-        everyday business processes.
+        To provide digital technology that simplifies and improves everyday
+        business processes.
       </p>
     </div>
   </section>
@@ -203,11 +210,13 @@
     <div class="section-head">
       <span class="section-eyebrow">Get in touch</span>
       <h2>Contact Us</h2>
-      <p>Have questions about your application or account? Reach out to our team.</p>
+      <p>
+        Have questions about your application or account? Reach out to our
+        team.
+      </p>
     </div>
 
     <div class="contact-layout">
-
       <form class="contact-form" id="contact-form">
         <div class="cf-row">
           <div class="cf-group">
@@ -248,7 +257,6 @@
           <span class="ci-value">Web &amp; Mobile</span>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -264,8 +272,8 @@
         <a href="#services">Services</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <a href="views/user/auth.html">Sign In</a>
-        <a href="views/user/dashboard.html">Dashboard</a>
+        <a href="/pages/auth.html">Sign In</a>
+        <a href="/pages/dashboard.html">Dashboard</a>
       </div>
       <div class="footer__copy">
         &copy; 2026 RoadReady JA. All rights reserved.
@@ -273,8 +281,10 @@
     </div>
   </footer>
 
-  <script src="public/js/script.js"></script>
-  <script src="public/js/map.js"></script>
+  <!-- Leaflet must load BEFORE map.js -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/public/js/script.js"></script>
+  <script src="/public/js/map.js"></script>
 </body>
+
 </html>

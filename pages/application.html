@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Road Ready JA – Applications</title>
-    <link rel="stylesheet" href="../../public/css/dotnav.css" />
-    <link rel="stylesheet" href="../../public/css/form.css" />
+    <link rel="stylesheet" href="/public/css/dotnav.css" />
+    <link rel="stylesheet" href="/public/css/form.css" />
   </head>
-  <body>
 
+  <body>
     <!-- ── Top dot navigation ── -->
     <nav class="dot-nav">
       <div class="dot-nav__item">
@@ -16,37 +16,43 @@
         <span class="dot-nav__label">Home</span>
       </div>
       <div class="dot-nav__item">
-        <a class="dot-nav__dot" href="../../index.html#about"></a>
+        <a class="dot-nav__dot" href="/#about"></a>
         <span class="dot-nav__label">About Us</span>
       </div>
       <div class="dot-nav__item">
-        <a class="dot-nav__dot" href="../../index.html#contact"></a>
+        <a class="dot-nav__dot" href="/#contact"></a>
         <span class="dot-nav__label">Contact</span>
       </div>
     </nav>
 
     <!-- Top bar -->
     <nav class="topbar">
-      <img src="../../public/images/logo.png" style="width:160px;height:auto">
+      <img src="/public/images/logo.png" style="width: 160px; height: auto" />
     </nav>
 
     <!-- Page wrapper -->
     <div class="page">
       <div class="form-card">
-
         <!-- Card header -->
         <div class="card-head">
           <span class="eyebrow">Membership</span>
           <h1 class="page-title" id="page-title">New Application</h1>
           <div class="tab-group">
-            <button class="tab active" id="tab-apply" onclick="switchTab('apply')">Apply</button>
-            <button class="tab"        id="tab-renew" onclick="switchTab('renew')">Renew / Replace</button>
+            <button
+              class="tab active"
+              id="tab-apply"
+              onclick="switchTab('apply')"
+            >
+              Apply
+            </button>
+            <button class="tab" id="tab-renew" onclick="switchTab('renew')">
+              Renew / Replace
+            </button>
           </div>
         </div>
 
         <!-- Card body -->
         <div class="card-body">
-
           <!-- Success panel (shared) -->
           <div class="success hidden" id="success-panel">
             <div class="success__icon">✓</div>
@@ -62,39 +68,54 @@
                 <span class="id-val" id="out-user-id">—</span>
               </div>
             </div>
-            <a class="btn-submit" href="/dashboard"
-               style="text-decoration:none;margin-top:1rem;">
+            <a
+              class="btn-submit"
+              href="/pages/dashboard.html"
+              style="text-decoration: none; margin-top: 1rem"
+            >
               Back to Dashboard
             </a>
           </div>
 
           <!-- ── APPLY FORM ── -->
           <form class="form-panel" id="form-apply" novalidate>
-
-            <!-- Full Name -->
             <div class="frow">
               <div class="fgroup">
                 <label class="flabel" for="a-name">Full Name</label>
-                <input class="finput" id="a-name" type="text" placeholder="Jane Doe" />
+                <input
+                  class="finput"
+                  id="a-name"
+                  type="text"
+                  placeholder="Jane Doe"
+                />
                 <span class="ferror" id="err-a-name"></span>
               </div>
             </div>
 
-            <!-- Email + TRN -->
             <div class="frow pair">
               <div class="fgroup">
                 <label class="flabel" for="a-email">Email</label>
-                <input class="finput" id="a-email" type="email" placeholder="jane@example.com" />
+                <input
+                  class="finput"
+                  id="a-email"
+                  type="email"
+                  placeholder="jane@example.com"
+                />
                 <span class="ferror" id="err-a-email"></span>
               </div>
               <div class="fgroup">
                 <label class="flabel" for="a-trn">TRN</label>
-                <input class="finput" id="a-trn" type="text" placeholder="000-000-000" maxlength="11" />
+                <input
+                  class="finput"
+                  id="a-trn"
+                  type="text"
+                  placeholder="000-000-000"
+                  maxlength="11"
+                />
                 <span class="ferror" id="err-a-trn"></span>
               </div>
             </div>
 
-            <!-- DOB + Phone -->
             <div class="frow pair">
               <div class="fgroup">
                 <label class="flabel" for="a-dob">Date of Birth</label>
@@ -103,42 +124,61 @@
               </div>
               <div class="fgroup">
                 <label class="flabel" for="a-phone">Phone</label>
-                <input class="finput" id="a-phone" type="tel" placeholder="876-000-0000" maxlength="12" />
+                <input
+                  class="finput"
+                  id="a-phone"
+                  type="tel"
+                  placeholder="876-000-0000"
+                  maxlength="12"
+                />
                 <span class="ferror" id="err-a-phone"></span>
               </div>
             </div>
 
-            <button class="btn-submit" type="submit" id="apply-btn">Submit Application</button>
-
+            <button class="btn-submit" type="submit" id="apply-btn">
+              Submit Application
+            </button>
           </form>
 
           <!-- ── RENEW FORM ── -->
           <form class="form-panel hidden" id="form-renew" novalidate>
-
-            <!-- Full Name -->
             <div class="frow">
               <div class="fgroup">
                 <label class="flabel" for="r-name">Full Name</label>
-                <input class="finput" id="r-name" type="text" placeholder="Jane Doe" />
+                <input
+                  class="finput"
+                  id="r-name"
+                  type="text"
+                  placeholder="Jane Doe"
+                />
                 <span class="ferror" id="err-r-name"></span>
               </div>
             </div>
 
-            <!-- TRN + Licence Number -->
             <div class="frow pair">
               <div class="fgroup">
                 <label class="flabel" for="r-trn">TRN</label>
-                <input class="finput" id="r-trn" type="text" placeholder="000-000-000" maxlength="11" />
+                <input
+                  class="finput"
+                  id="r-trn"
+                  type="text"
+                  placeholder="000-000-000"
+                  maxlength="11"
+                />
                 <span class="ferror" id="err-r-trn"></span>
               </div>
               <div class="fgroup">
                 <label class="flabel" for="r-licence">Licence Number</label>
-                <input class="finput" id="r-licence" type="text" placeholder="L000-00000" />
+                <input
+                  class="finput"
+                  id="r-licence"
+                  type="text"
+                  placeholder="L000-00000"
+                />
                 <span class="ferror" id="err-r-licence"></span>
               </div>
             </div>
 
-            <!-- Issue Date + Expiry Date -->
             <div class="frow pair">
               <div class="fgroup">
                 <label class="flabel" for="r-issue">Issue Date</label>
@@ -152,7 +192,6 @@
               </div>
             </div>
 
-            <!-- Status -->
             <div class="frow">
               <div class="fgroup">
                 <label class="flabel" for="r-status">Status</label>
@@ -168,7 +207,6 @@
               </div>
             </div>
 
-            <!-- Payment Method + Amount -->
             <div class="frow pair">
               <div class="fgroup">
                 <label class="flabel" for="r-payment">Payment Method</label>
@@ -182,17 +220,27 @@
               </div>
               <div class="fgroup">
                 <label class="flabel" for="r-amount">Amount (JMD)</label>
-                <input class="finput" id="r-amount" type="number" placeholder="0.00" min="0" step="0.01" />
+                <input
+                  class="finput"
+                  id="r-amount"
+                  type="number"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
                 <span class="ferror" id="err-r-amount"></span>
               </div>
             </div>
 
-            <!-- Upload -->
             <div class="frow">
               <div class="fgroup">
                 <label class="flabel">Upload Document</label>
                 <label class="file-drop" id="file-drop">
-                  <input type="file" id="r-file" accept=".pdf,.jpg,.jpeg,.png" />
+                  <input
+                    type="file"
+                    id="r-file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                  />
                   <span class="file-drop__text" id="file-label">
                     Click to upload or drag &amp; drop — PDF, JPG, PNG
                   </span>
@@ -201,16 +249,19 @@
               </div>
             </div>
 
-            <button class="btn-submit" type="submit" id="renew-btn">Submit Renewal</button>
-
+            <button class="btn-submit" type="submit" id="renew-btn">
+              Submit Renewal
+            </button>
           </form>
-
-        </div><!-- /card-body -->
-      </div><!-- /form-card -->
-    </div><!-- /page -->
+        </div>
+        <!-- /card-body -->
+      </div>
+      <!-- /form-card -->
+    </div>
+    <!-- /page -->
 
     <div id="toast" class="toast"></div>
 
-    <script type="module" src="../../public/js/form.js"></script>
+    <script type="module" src="/public/js/form.js"></script>
   </body>
 </html>
