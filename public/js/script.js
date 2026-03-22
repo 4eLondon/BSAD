@@ -3,7 +3,7 @@
  *
  * 1. Smooth scroll for all anchor links (navbar + footer)
  * 2. Active nav highlight based on scroll position
- * 3. Contact form — client-side validation + success toast
+ * 3. Contact form — client-side validation + mailto launch
  */
 
 // ── Smooth scroll ──────────────────────────────────────────
@@ -37,6 +37,9 @@ const observer = new IntersectionObserver(
 sections.forEach((s) => observer.observe(s));
 
 // ── Contact form ───────────────────────────────────────────
+
+const COMPANY_EMAIL = "roadready.ja@gmail.com";
+
 const form = document.getElementById("contact-form");
 if (form) {
   form.addEventListener("submit", (e) => {
@@ -44,6 +47,7 @@ if (form) {
 
     const name = document.getElementById("cf-name").value.trim();
     const email = document.getElementById("cf-email").value.trim();
+    const subject = document.getElementById("cf-subject").value.trim();
     const message = document.getElementById("cf-message").value.trim();
 
     if (!name || !email || !message) {
@@ -51,8 +55,24 @@ if (form) {
       return;
     }
 
-    // No backend yet — just confirm to the user
-    showToast("Message received. We will be in touch shortly.");
+    const mailSubject = subject
+      ? `[RoadReady JA] ${subject}`
+      : `[RoadReady JA] Message from ${name}`;
+
+    const mailBody = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      ``,
+      `Message:`,
+      message,
+    ].join("\n");
+
+    window.location.href =
+      `mailto:${COMPANY_EMAIL}` +
+      `?subject=${encodeURIComponent(mailSubject)}` +
+      `&body=${encodeURIComponent(mailBody)}`;
+
+    showToast("Opening your email client…");
     form.reset();
   });
 }

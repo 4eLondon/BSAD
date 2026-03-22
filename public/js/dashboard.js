@@ -1,21 +1,24 @@
 /*
  * dashboard.js
  *
- * 1. Auth guard — redirect to /pages/auth.html?mode=login if no session
- * 2. Populate all user info from Supabase session
- * 3. Build activity log from auth state events + seed events
- * 4. Notification drawer (bell + sidebar link)
+ * 1. Auth guard
+ * 2. Populate user info
+ * 3. Persistent activity log — stored in Supabase `activity_log` table
+ *    - Survives logout/login
+ *    - No duplicate sign-in spam from tab switching
+ * 4. Notification drawer
  * 5. Sign out
  */
 
 import { supabase } from "./dataconnect.js";
+
 // ── Auth guard ─────────────────────────────────────────────
 
 const {
   data: { session },
 } = await supabase.auth.getSession();
 if (!session) {
-  window.location.href = "/pages/auth.html?mode=login"; // ← was /auth.hmtl (typo)
+  window.location.href = "/pages/auth.html?mode=login";
 }
 
 const user = session.user;
@@ -90,44 +93,79 @@ supabase
     document.getElementById("stat-apps").textContent = count ?? "0";
   });
 
-// ── Activity log ───────────────────────────────────────────
+// ── Activity log (persistent) ──────────────────────────────
 
-const EVENT_ICONS = {
-  SIGNED_IN: "↗",
-  SIGNED_OUT: "↙",
-  PASSWORD_RECOVERY: "⟳",
-  USER_UPDATED: "✎",
-  TOKEN_REFRESHED: "↺",
+const ICON_MAP = {
+  "Signed In": "↗",
+  "Signed Out": "↙",
+  "Account Created": "★",
+  "Email Confirmed": "✓",
+  "Password Changed": "⟳",
+  "Profile Updated": "✎",
+  "Application Submitted": "📄",
+  "Renewal Submitted": "🔄",
 };
 
 const activityList = document.getElementById("activity-list");
 const notifList = document.getElementById("notif-list");
 let unread = 0;
 
-function addEvent(label, icon, time, isNew = false) {
+// Render a single entry into both the activity list and notification list
+function renderEntry(entry, isNew = false) {
   activityList.querySelector(".activity-list__empty")?.remove();
   notifList.querySelector(".notif-list__empty")?.remove();
+
+  const icon = ICON_MAP[entry.label] ?? "·";
 
   const li = document.createElement("li");
   li.innerHTML = `
     <div class="activity-icon">${icon}</div>
     <div class="activity-body">
-      <strong>${label}</strong>
-      <span class="activity-time">${fmt(time)}</span>
+      <strong>${entry.label}</strong>
+      <span class="activity-time">${fmt(entry.created_at)}</span>
     </div>
   `;
   activityList.prepend(li);
 
   const ni = document.createElement("li");
   if (isNew) ni.classList.add("notif-item--new");
-  ni.innerHTML = `${label}<span class="notif-item__time">${fmt(time)}</span>`;
+  ni.innerHTML = `${entry.label}<span class="notif-item__time">${fmt(entry.created_at)}</span>`;
   notifList.prepend(ni);
 
   if (isNew) {
     unread++;
     updateBadges();
-    showToast(label);
+    showToast(entry.label);
   }
+}
+
+// Write a new event to Supabase then render it
+async function logEvent(label) {
+  const { data, error } = await supabase
+    .from("activity_log")
+    .insert({ user_id: user.id, label, icon: ICON_MAP[label] ?? "·" })
+    .select()
+    .single();
+
+  if (!error && data) renderEntry(data, true);
+}
+
+// Load all past entries from Supabase on page load
+async function loadLog() {
+  const { data, error } = await supabase
+    .from("activity_log")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (error || !data?.length) return;
+
+  activityList.innerHTML = "";
+  notifList.innerHTML = "";
+
+  // Render oldest first so prepend builds the list correctly
+  [...data].reverse().forEach((entry) => renderEntry(entry, false));
 }
 
 function updateBadges() {
@@ -140,18 +178,78 @@ function updateBadges() {
   });
 }
 
-if (user.created_at) addEvent("Account created", "★", user.created_at);
-if (user.email_confirmed_at)
-  addEvent("Email confirmed", "✓", user.email_confirmed_at);
-if (user.last_sign_in_at) addEvent("Signed in", "↗", user.last_sign_in_at);
+// Load existing history first
+await loadLog();
 
-supabase.auth.onAuthStateChange((event, _session) => {
-  if (event === "INITIAL_SESSION") return;
-  const label = event
-    .replace(/_/g, " ")
-    .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-  addEvent(label, EVENT_ICONS[event] ?? "·", new Date().toISOString(), true);
+// ── Log sign-in once per browser session ──────────────────
+// sessionStorage is cleared when the tab/browser closes.
+// This prevents tab switches and token refreshes from
+// adding duplicate "Signed In" entries.
+
+const SESSION_KEY = `signed_in_logged_${user.id}`;
+if (!sessionStorage.getItem(SESSION_KEY)) {
+  sessionStorage.setItem(SESSION_KEY, "1");
+  await logEvent("Signed In");
+}
+
+// ── Seed one-time account events ──────────────────────────
+// Only insert "Account Created" / "Email Confirmed" if they
+// don't already exist in the log for this user.
+
+const { count: createdCount } = await supabase
+  .from("activity_log")
+  .select("id", { count: "exact", head: true })
+  .eq("user_id", user.id)
+  .eq("label", "Account Created");
+
+if (createdCount === 0 && user.created_at) {
+  await supabase.from("activity_log").insert({
+    user_id: user.id,
+    label: "Account Created",
+    icon: "★",
+    created_at: user.created_at,
+  });
+}
+
+const { count: confirmedCount } = await supabase
+  .from("activity_log")
+  .select("id", { count: "exact", head: true })
+  .eq("user_id", user.id)
+  .eq("label", "Email Confirmed");
+
+if (confirmedCount === 0 && user.email_confirmed_at) {
+  await supabase.from("activity_log").insert({
+    user_id: user.id,
+    label: "Email Confirmed",
+    icon: "✓",
+    created_at: user.email_confirmed_at,
+  });
+}
+
+// Reload after seeding so new entries appear
+await loadLog();
+
+// ── Live auth state listener ───────────────────────────────
+// TOKEN_REFRESHED  → fires on every tab switch, skip it
+// SIGNED_IN        → fires on page load, skip it (handled above)
+// INITIAL_SESSION  → fires on page load, skip it
+
+const IGNORED_EVENTS = new Set([
+  "INITIAL_SESSION",
+  "TOKEN_REFRESHED",
+  "SIGNED_IN",
+]);
+
+const EVENT_LABEL_MAP = {
+  SIGNED_OUT: "Signed Out",
+  PASSWORD_RECOVERY: "Password Changed",
+  USER_UPDATED: "Profile Updated",
+};
+
+supabase.auth.onAuthStateChange(async (event) => {
+  if (IGNORED_EVENTS.has(event)) return;
+  const label = EVENT_LABEL_MAP[event];
+  if (label) await logEvent(label);
 });
 
 // ── Notification drawer ────────────────────────────────────
@@ -185,7 +283,9 @@ notifTrigger?.addEventListener("click", (e) => {
 notifClose?.addEventListener("click", closeDrawer);
 overlay?.addEventListener("click", closeDrawer);
 
-document.getElementById("clear-log")?.addEventListener("click", () => {
+// Clear only clears the UI — comment in the delete line to also wipe from Supabase
+document.getElementById("clear-log")?.addEventListener("click", async () => {
+  // await supabase.from("activity_log").delete().eq("user_id", user.id);
   activityList.innerHTML =
     '<li class="activity-list__empty">No recent activity</li>';
   notifList.innerHTML = '<li class="notif-list__empty">No notifications</li>';
@@ -196,6 +296,7 @@ document.getElementById("clear-log")?.addEventListener("click", () => {
 // ── Sign out ───────────────────────────────────────────────
 
 document.getElementById("signout-btn")?.addEventListener("click", async () => {
+  await logEvent("Signed Out");
   await supabase.auth.signOut();
   window.location.href = "/pages/auth.html?mode=login";
 });

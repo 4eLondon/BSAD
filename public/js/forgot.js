@@ -8,7 +8,8 @@
  */
 
 import { supabase } from "./dataconnect.js";
-const RESET_REDIRECT_URL = window.location.href.split("?")[0].split("#")[0];
+
+const RESET_REDIRECT_URL = window.location.origin + "/pages/forgot.html";
 
 // ── Element references ─────────────────────────────────────
 const stepEmail = document.getElementById("step-email");
@@ -49,11 +50,24 @@ function showToast(message, type = "success") {
 
 // ── Step switcher ──────────────────────────────────────────
 
-function showStep(stepEl) {
+function showStep(stepEl, animate = false) {
   [stepEmail, stepConfirm, stepReset, stepSuccess].forEach((el) => {
     el.classList.add("form-wrap--hidden");
   });
   stepEl.classList.remove("form-wrap--hidden");
+
+  // Optional fade-in (used when arriving from email link)
+  if (animate) {
+    stepEl.style.opacity = "0";
+    stepEl.style.transform = "translateY(10px)";
+    stepEl.style.transition = "opacity 0.45s ease, transform 0.45s ease";
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        stepEl.style.opacity = "1";
+        stepEl.style.transform = "translateY(0)";
+      });
+    });
+  }
 }
 
 // ── Field error helpers ────────────────────────────────────
@@ -76,13 +90,38 @@ function setButtonLoading(btn, loading, label) {
 }
 
 // ── On page load: detect recovery token ───────────────────
+// Supabase sends either:
+//   • Old flow: #type=recovery&access_token=...  (hash)
+//   • New PKCE flow: ?code=...                   (query string)
 
-window.addEventListener("load", () => {
-  const params = new URLSearchParams(window.location.hash.replace("#", "?"));
-  if (params.get("type") === "recovery") {
+window.addEventListener("load", async () => {
+  const hashParams = new URLSearchParams(
+    window.location.hash.replace("#", "?"),
+  );
+  const queryParams = new URLSearchParams(window.location.search);
+
+  if (hashParams.get("type") === "recovery") {
+    // Legacy hash-based token
     leftHeading.textContent = "Almost there!";
     leftBody.innerHTML = "Choose a new password<br />to secure your account.";
-    showStep(stepReset);
+    showStep(stepReset, true);
+  } else if (queryParams.get("code")) {
+    // New PKCE code — exchange it for a session first
+    const { error } = await supabase.auth.exchangeCodeForSession(
+      queryParams.get("code"),
+    );
+
+    if (!error) {
+      leftHeading.textContent = "Almost there!";
+      leftBody.innerHTML = "Choose a new password<br />to secure your account.";
+      showStep(stepReset, true); // ← fade-in animation
+    } else {
+      console.error("exchangeCodeForSession:", error.message);
+      showToast(
+        "Reset link expired or invalid. Please request a new one.",
+        "error",
+      );
+    }
   }
 });
 
@@ -112,7 +151,6 @@ sendBtn.addEventListener("click", async () => {
     return;
   }
 
-  // Show toast + switch to confirmation screen
   showToast(`Reset link sent to ${email}`);
   confirmEmailEl.textContent = email;
   showStep(stepConfirm);
@@ -173,7 +211,7 @@ resetBtn.addEventListener("click", async () => {
   }
 
   showToast("Password updated successfully!");
-  showStep(stepSuccess);
+  showStep(stepSuccess, true);
 });
 
 [newPasswordInput, confirmPasswordInput].forEach((input) => {
