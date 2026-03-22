@@ -1,19 +1,4 @@
-/*
- * auth.js
- *
- * Handles:
- *  1. Panel slide + form fade when switching register ↔ login
- *  2. ?mode=login URL param
- *  3. Password match validation
- *  4. Supabase Auth sign-up and sign-in
- */
-
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const SUPABASE_URL = "https://pyglxkfdenmvywbbnfui.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY"; // ← replace with your real key from Supabase dashboard
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+import { supabase } from "./dataconnect.js";
 
 // ── Elements ───────────────────────────────────────────────
 const card = document.getElementById("card");

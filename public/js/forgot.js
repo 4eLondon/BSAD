@@ -7,33 +7,25 @@
  *   Step 4 (step-success) – Password updated confirmation
  */
 
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const SUPABASE_URL      = "https://pyglxkfdenmvywbbnfui.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_AbtdIDVEEoU51BbgdQsN2A_D2yD4VC1";
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+import { supabase } from "./dataconnect.js";
 const RESET_REDIRECT_URL = window.location.href.split("?")[0].split("#")[0];
 
-
 // ── Element references ─────────────────────────────────────
-const stepEmail   = document.getElementById("step-email");
+const stepEmail = document.getElementById("step-email");
 const stepConfirm = document.getElementById("step-confirm");
-const stepReset   = document.getElementById("step-reset");
+const stepReset = document.getElementById("step-reset");
 const stepSuccess = document.getElementById("step-success");
 
-const sendBtn              = document.getElementById("send-btn");
-const resendBtn            = document.getElementById("resend-btn");
-const resetBtn             = document.getElementById("reset-btn");
-const emailInput           = document.getElementById("reset-email");
-const confirmEmailEl       = document.getElementById("confirm-email");
-const newPasswordInput     = document.getElementById("new-password");
+const sendBtn = document.getElementById("send-btn");
+const resendBtn = document.getElementById("resend-btn");
+const resetBtn = document.getElementById("reset-btn");
+const emailInput = document.getElementById("reset-email");
+const confirmEmailEl = document.getElementById("confirm-email");
+const newPasswordInput = document.getElementById("new-password");
 const confirmPasswordInput = document.getElementById("confirm-password");
 
 const leftHeading = document.getElementById("left-heading");
-const leftBody    = document.getElementById("left-body");
-
+const leftBody = document.getElementById("left-body");
 
 // ── Toast ──────────────────────────────────────────────────
 
@@ -42,9 +34,9 @@ function showToast(message, type = "success") {
   if (existing) existing.remove();
 
   const toast = document.createElement("div");
-  toast.id          = "toast";
+  toast.id = "toast";
   toast.textContent = message;
-  toast.className   = `toast toast--${type}`;
+  toast.className = `toast toast--${type}`;
   document.body.appendChild(toast);
 
   requestAnimationFrame(() => toast.classList.add("toast--visible"));
@@ -55,16 +47,14 @@ function showToast(message, type = "success") {
   }, 4000);
 }
 
-
 // ── Step switcher ──────────────────────────────────────────
 
 function showStep(stepEl) {
-  [stepEmail, stepConfirm, stepReset, stepSuccess].forEach(el => {
+  [stepEmail, stepConfirm, stepReset, stepSuccess].forEach((el) => {
     el.classList.add("form-wrap--hidden");
   });
   stepEl.classList.remove("form-wrap--hidden");
 }
-
 
 // ── Field error helpers ────────────────────────────────────
 
@@ -74,17 +64,16 @@ function setError(input, message) {
   input.style.borderColor = message ? "#e8504a" : "";
   if (message) {
     const err = document.createElement("span");
-    err.className   = "field-error";
+    err.className = "field-error";
     err.textContent = message;
     input.parentElement.appendChild(err);
   }
 }
 
 function setButtonLoading(btn, loading, label) {
-  btn.disabled    = loading;
+  btn.disabled = loading;
   btn.textContent = loading ? "Please wait…" : label;
 }
-
 
 // ── On page load: detect recovery token ───────────────────
 
@@ -92,11 +81,10 @@ window.addEventListener("load", () => {
   const params = new URLSearchParams(window.location.hash.replace("#", "?"));
   if (params.get("type") === "recovery") {
     leftHeading.textContent = "Almost there!";
-    leftBody.innerHTML      = "Choose a new password<br />to secure your account.";
+    leftBody.innerHTML = "Choose a new password<br />to secure your account.";
     showStep(stepReset);
   }
 });
-
 
 // ── Step 1: Send reset email ───────────────────────────────
 
@@ -132,7 +120,6 @@ sendBtn.addEventListener("click", async () => {
 
 emailInput.addEventListener("input", () => setError(emailInput, ""));
 
-
 // ── Step 2: Resend ─────────────────────────────────────────
 
 resendBtn.addEventListener("click", () => {
@@ -141,14 +128,13 @@ resendBtn.addEventListener("click", () => {
   emailInput.focus();
 });
 
-
 // ── Step 3: Update password ────────────────────────────────
 
 resetBtn.addEventListener("click", async () => {
   setError(newPasswordInput, "");
   setError(confirmPasswordInput, "");
 
-  const newPassword     = newPasswordInput.value;
+  const newPassword = newPasswordInput.value;
   const confirmPassword = confirmPasswordInput.value;
 
   let hasError = false;
@@ -178,7 +164,10 @@ resetBtn.addEventListener("click", async () => {
   setButtonLoading(resetBtn, false, "Update Password");
 
   if (error) {
-    setError(newPasswordInput, "Update failed. Please request a new reset link.");
+    setError(
+      newPasswordInput,
+      "Update failed. Please request a new reset link.",
+    );
     console.error("updateUser:", error.message);
     return;
   }
@@ -187,6 +176,6 @@ resetBtn.addEventListener("click", async () => {
   showStep(stepSuccess);
 });
 
-[newPasswordInput, confirmPasswordInput].forEach(input => {
+[newPasswordInput, confirmPasswordInput].forEach((input) => {
   input.addEventListener("input", () => setError(input, ""));
 });

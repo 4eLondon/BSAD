@@ -8,13 +8,7 @@
  * 5. Sign out
  */
 
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const SUPABASE_URL = "https://pyglxkfdenmvywbbnfui.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY"; // ← replace with your real key from Supabase dashboard
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+import { supabase } from "./dataconnect.js";
 // ── Auth guard ─────────────────────────────────────────────
 
 const {
