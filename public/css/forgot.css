@@ -6,28 +6,34 @@
    Covers every class used in application.html.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap");
 
 /* ── Variables ───────────────────────────────────────────── */
 :root {
-  --bg:          #1a1a1a;
-  --surface:     #242424;
-  --surface-2:   #2e2e2e;
-  --border:      #3a3a3a;
-  --accent:      #f0d316;
-  --accent-dim:  #f0b026;
-  --text:        #e8e3dc;
-  --text-muted:  #8a857e;
+  --bg: #1a1a1a;
+  --surface: #242424;
+  --surface-2: #2e2e2e;
+  --border: #3a3a3a;
+  --accent: #f0d316;
+  --accent-dim: #f0b026;
+  --text: #e8e3dc;
+  --text-muted: #8a857e;
   --text-subtle: #5a5550;
-  --error:       #e05555;
-  --success:     #4caf87;
-  --font-ui:     'IBM Plex Sans', sans-serif;
-  --font-mono:   'IBM Plex Mono', monospace;
-  --transition:  0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --error: #e05555;
+  --success: #4caf87;
+  --font-ui: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Reset & Base ────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: var(--bg);
@@ -157,7 +163,9 @@ body {
   font-family: var(--font-ui);
   font-size: 0.88rem;
   outline: none;
-  transition: border-color var(--transition), background var(--transition);
+  transition:
+    border-color var(--transition),
+    background var(--transition);
   -webkit-appearance: none;
 }
 
@@ -166,7 +174,9 @@ body {
   background: var(--surface-2);
 }
 
-.field-input::placeholder { color: var(--text-subtle); }
+.field-input::placeholder {
+  color: var(--text-subtle);
+}
 
 /* Date input calendar icon colour fix */
 .field-input[type="date"]::-webkit-calendar-picker-indicator {
@@ -194,8 +204,13 @@ body {
   transition: border-color var(--transition);
 }
 
-.field-select:focus { border-color: var(--accent); }
-.field-select option { background: var(--surface); color: var(--text); }
+.field-select:focus {
+  border-color: var(--accent);
+}
+.field-select option {
+  background: var(--surface);
+  color: var(--text);
+}
 
 /* ── Emergency contact row (input + select side by side) ─── */
 .ec-row {
@@ -228,7 +243,9 @@ body {
   transition: color var(--transition);
 }
 
-.radio-label:hover { color: var(--text); }
+.radio-label:hover {
+  color: var(--text);
+}
 
 .radio-label input[type="radio"] {
   -webkit-appearance: none;
@@ -241,7 +258,9 @@ body {
   cursor: pointer;
   flex-shrink: 0;
   position: relative;
-  transition: border-color var(--transition), background var(--transition);
+  transition:
+    border-color var(--transition),
+    background var(--transition);
 }
 
 .radio-label input[type="radio"]:checked {
@@ -250,7 +269,7 @@ body {
 }
 
 .radio-label input[type="radio"]:checked::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 3px;
   border-radius: 50%;
@@ -292,24 +311,37 @@ body {
   cursor: pointer;
   border: none;
   text-decoration: none;
-  transition: background var(--transition), color var(--transition),
-              border-color var(--transition), transform 0.1s;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform 0.1s;
 }
-.btn:active { transform: translateY(1px); }
+.btn:active {
+  transform: translateY(1px);
+}
 
 .btn-primary {
   background: var(--accent);
   color: #1a1a1a;
 }
-.btn-primary:hover { background: var(--accent-dim); }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary:hover {
+  background: var(--accent-dim);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
-.btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
 
 /* ── Toast ───────────────────────────────────────────────── */
 #toast {
@@ -327,7 +359,9 @@ body {
   color: #fff;
   background: var(--success);
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
   z-index: 999;
   white-space: nowrap;
   pointer-events: none;
@@ -335,8 +369,84 @@ body {
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .app-grid { grid-template-columns: 1fr; }
-  .app-layout { padding: 2rem 1.2rem 4rem; }
-  .app-submit { flex-direction: column-reverse; }
-  .app-submit .btn { width: 100%; }
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+  .app-layout {
+    padding: 2rem 1.2rem 4rem;
+  }
+  .app-submit {
+    flex-direction: column-reverse;
+  }
+  .app-submit .btn {
+    width: 100%;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 480px)
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  /* ── Layout tighter on small phones ── */
+  .app-layout {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  /* ── Header ── */
+  .app-header__title {
+    font-size: 1.2rem;
+  }
+
+  .app-header__sub {
+    font-size: 0.78rem;
+  }
+
+  /* ── Section cards ── */
+  .app-section__body {
+    padding: 1.1rem 1rem;
+  }
+
+  .app-section__header {
+    padding: 0.75rem 1rem;
+  }
+
+  /* ── Touch-friendly inputs ── */
+  .field-input,
+  .field-select {
+    padding: 0.75rem 0.85rem;
+    font-size: 16px; /* prevents iOS auto-zoom on focus */
+  }
+
+  /* Override right-padding for select arrow */
+  .field-select {
+    padding-right: 2rem;
+  }
+
+  /* ── Radio group wraps to column ── */
+  .radio-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* ── Emergency contact row stacks ── */
+  .ec-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ec-row .field-select {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* ── Submit row ── */
+  .app-submit {
+    gap: 0.6rem;
+  }
+
+  /* ── Buttons full width on mobile ── */
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

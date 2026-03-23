@@ -955,6 +955,125 @@ a {
   }
 }
 
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 480px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  /* ── Navbar ── */
+  .navbar {
+    padding: 0 16px;
+    height: 52px;
+  }
+
+  .nav-left {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── Hero ── */
+  .welcome {
+    padding: 48px 20px 52px;
+    min-height: 420px;
+  }
+
+  .welcome-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-sub {
+    font-size: 0.88rem;
+    margin-bottom: 24px;
+  }
+
+  .welcome-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .welcome-buttons .login,
+  .welcome-buttons .btn-outline {
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: 13px 20px;
+  }
+
+  /* ── Section spacing ── */
+  .services,
+  .how-it-works,
+  .contact {
+    padding: 44px 20px;
+  }
+
+  .about__text-col {
+    padding: 36px 20px;
+  }
+
+  .vm-card {
+    padding: 36px 20px;
+  }
+
+  .section-head {
+    margin-bottom: 36px;
+  }
+
+  .section-head h2 {
+    font-size: 1.25rem;
+  }
+
+  /* ── Service cards single-column (already set at 900px, ensuring padding) ── */
+  .service-card {
+    padding: 24px 20px;
+  }
+
+  /* ── Steps: already column at 900px, tighten spacing ── */
+  .steps {
+    gap: 16px;
+  }
+
+  /* ── Contact form submit full width ── */
+  .cf-submit {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Touch-friendly inputs */
+  .cf-input {
+    font-size: 16px; /* prevents iOS zoom */
+    padding: 0.75rem 0.85rem;
+  }
+
+  /* ── Contact info panel ── */
+  .ci-value {
+    font-size: 0.78rem;
+  }
+
+  /* ── Map header ── */
+  .map-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 20px 12px;
+  }
+
+  .map-section__status {
+    align-items: flex-start;
+  }
+
+  .map-wrap {
+    height: 240px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 28px 20px;
+  }
+
+  .footer__links {
+    gap: 16px;
+  }
+}
+
 /* ── Location permission prompt ───────────────────────────── */
 #loc-overlay {
   position: fixed;

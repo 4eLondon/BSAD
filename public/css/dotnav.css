@@ -134,3 +134,65 @@
 .dot-nav__item:hover .dot-nav__label {
   color: var(--accent);
 }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Tablet & Mobile
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  /* ── Topbar padding tightens ── */
+  .topbar {
+    padding: 0 1rem;
+  }
+
+  /* ── Dot nav compresses gap ── */
+  .dot-nav {
+    gap: 16px;
+  }
+
+  /* ── Slightly smaller dots ── */
+  .dot-nav__dot::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ── Labels hidden on very narrow screens to prevent overflow ── */
+  .dot-nav__label {
+    font-size: 0.46rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 420px) {
+  /* ── Topbar brand truncates or hides ── */
+  .topbar__brand {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── Back link tighter ── */
+  .topbar__back {
+    font-size: 0.6rem;
+  }
+
+  /* ── Nav labels hidden entirely — dots only ── */
+  .dot-nav__label {
+    display: none;
+  }
+
+  /* ── Dots stay tappable with adequate size ── */
+  .dot-nav__dot {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dot-nav__dot::before {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ── Gap between dots tightens ── */
+  .dot-nav {
+    gap: 10px;
+  }
+}

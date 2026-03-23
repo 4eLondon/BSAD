@@ -443,6 +443,96 @@ body {
   background: var(--error);
 }
 
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 600px) & Mobile (≤ 420px)
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  /* ── Card fills viewport width ── */
+  .form-card {
+    max-width: 100%;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  /* ── Page padding collapses ── */
+  .page {
+    padding-top: var(--topbar-h);
+    align-items: flex-start;
+  }
+
+  /* ── Card header tightens ── */
+  .card-head {
+    padding: 1rem 1.2rem 0;
+  }
+
+  .page-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ── Tabs labels slightly smaller ── */
+  .tab {
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 0;
+  }
+
+  /* ── Card body padding ── */
+  .card-body {
+    padding: 1.1rem 1.2rem 1.3rem;
+  }
+
+  /* ── All pair rows become single-column ── */
+  .frow.pair {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Submit button: full width ── */
+  .btn-submit {
+    font-size: 0.68rem;
+    padding: 0.72rem;
+  }
+
+  /* ── Success IDs readable on small screens ── */
+  .id-val {
+    font-size: 0.6rem;
+    max-width: 55%;
+  }
+
+  /* ── Topbar tighter ── */
+  .topbar {
+    padding: 0 1.2rem;
+  }
+
+  .topbar__brand {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+  }
+}
+
+@media (max-width: 420px) {
+  .card-body {
+    padding: 1rem;
+  }
+
+  .frow {
+    gap: 0.7rem;
+  }
+
+  /* File drop area — touch-friendly height */
+  .file-drop {
+    padding: 1rem;
+  }
+
+  /* Larger touch targets for selects */
+  .fselect,
+  .finput {
+    padding: 0.75rem 0.8rem;
+  }
+}
+
 /* ── Tab switch animation ─────────────────────────────────
    The card smoothly resizes as the renew form is taller.
    Each form panel fades + lifts in. The card height
