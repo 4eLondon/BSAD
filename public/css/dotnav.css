@@ -144,37 +144,31 @@
     padding: 0 1rem;
   }
 
-  /*
-   * Keep dot-nav fixed (it's a separate layer above the topbar)
-   * but shrink the gap so it takes up less horizontal space,
-   * and constrain it with left/right margins so it can't
-   * bleed into the logo or back-link on either side.
-   */
+  /* Pin dot nav to the right edge — no more overlap with logo */
   .dot-nav {
-    /* Stay centred but respect a safe zone on each side */
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: calc(100% - 280px); /* 140px safe margin each side */
-    gap: 12px;
-    overflow: hidden;
+    left: auto;
+    right: 1rem;
+    transform: none;
+    gap: 20px;
   }
 
-  /* Labels always visible — smaller to fit */
+  /* Bigger dots */
+  .dot-nav__dot {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dot-nav__dot::before {
+    width: 22px;
+    height: 22px;
+    border-width: 2px;
+  }
+
+  /* Labels always visible and legible */
   .dot-nav__label {
     display: block;
-    font-size: 0.42rem;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-  }
-
-  /* Slightly smaller dots */
-  .dot-nav__dot::before {
-    width: 14px;
-    height: 14px;
-  }
-
-  .dot-nav__dot:hover::before {
-    transform: scale(1.3);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
   }
 }
 
@@ -183,19 +177,17 @@
     padding: 0 0.75rem;
   }
 
-  /* Tighter safe zone on small phones — logo is same width */
   .dot-nav {
-    max-width: calc(100% - 260px);
-    gap: 8px;
+    right: 0.75rem;
+    gap: 16px;
   }
 
   .dot-nav__dot::before {
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
   }
 
   .dot-nav__label {
-    font-size: 0.38rem;
-    letter-spacing: 0.04em;
+    font-size: 0.46rem;
   }
 }
