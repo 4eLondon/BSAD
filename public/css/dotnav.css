@@ -139,60 +139,81 @@
    RESPONSIVE — Tablet & Mobile
    ══════════════════════════════════════════════════════════ */
 
-@media (max-width: 640px) {
-  /* ── Topbar padding tightens ── */
+@media (max-width: 768px) {
+  /*
+   * Switch topbar from space-between to a 3-column grid so the
+   * logo (left), dot nav (centre), and back-link (right) each
+   * sit in their own lane without overlapping.
+   */
   .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     padding: 0 1rem;
+    gap: 0;
   }
 
-  /* ── Dot nav compresses gap ── */
+  /* Logo stays left-aligned in its column */
+  .topbar__brand {
+    justify-self: start;
+  }
+
+  /* Back link stays right-aligned in its column */
+  .topbar__back {
+    justify-self: end;
+    font-size: 0.6rem;
+  }
+
+  /*
+   * Dot nav: drop the fixed + translateX(-50%) centering —
+   * it's now centred by the grid middle column instead.
+   * Keep it inside normal flow so it doesn't escape the grid.
+   */
   .dot-nav {
-    gap: 16px;
+    position: static; /* no longer fixed */
+    transform: none; /* remove the -50% shift */
+    height: var(--topbar-h);
+    gap: 14px;
   }
 
-  /* ── Slightly smaller dots ── */
-  .dot-nav__dot::before {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* ── Labels hidden on very narrow screens to prevent overflow ── */
+  /* Labels — always visible, never hidden on mobile */
   .dot-nav__label {
-    font-size: 0.46rem;
+    display: block;
+    font-size: 0.44rem;
     letter-spacing: 0.08em;
+  }
+
+  /* Slightly smaller dots to fit the tighter space */
+  .dot-nav__dot::before {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Hover scale stays but won't overflow the topbar */
+  .dot-nav__dot:hover::before {
+    transform: scale(1.35);
   }
 }
 
 @media (max-width: 420px) {
-  /* ── Topbar brand truncates or hides ── */
-  .topbar__brand {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
+  .topbar {
+    padding: 0 0.75rem;
   }
 
-  /* ── Back link tighter ── */
-  .topbar__back {
-    font-size: 0.6rem;
-  }
-
-  /* ── Nav labels hidden entirely — dots only ── */
-  .dot-nav__label {
-    display: none;
-  }
-
-  /* ── Dots stay tappable with adequate size ── */
-  .dot-nav__dot {
-    width: 28px;
-    height: 28px;
-  }
-
-  .dot-nav__dot::before {
-    width: 18px;
-    height: 18px;
-  }
-
-  /* ── Gap between dots tightens ── */
+  /* Compress gap further on very small phones */
   .dot-nav {
     gap: 10px;
+  }
+
+  /* Dots a touch smaller */
+  .dot-nav__dot::before {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* Labels stay visible but as small as readable allows */
+  .dot-nav__label {
+    font-size: 0.4rem;
+    letter-spacing: 0.06em;
   }
 }
