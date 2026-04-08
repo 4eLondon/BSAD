@@ -91,6 +91,7 @@
         <span class="topbar__breadcrumb">Dashboard / <strong>Overview</strong></span>
       </div>
       <div class="topbar__right">
+        <button id="theme-toggle" class="theme-toggle topbar__icon-btn" aria-label="Switch to light mode"></button>
         <button class="topbar__icon-btn" id="bell-btn" title="Notifications">
           <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
             <path d="M8 1a5 5 0 0 1 5 5v3l1 2H2l1-2V6a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.5" />
@@ -194,7 +195,7 @@
   </main>
 
   <div id="toast" class="toast"></div>
-
+  <script src="/public/js/theme.js"></script>
   <script type="module" src="/public/js/dashboard.js"></script>
 </body>
 

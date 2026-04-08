@@ -1,9 +1,3 @@
-/* ============================================================
-   dashboard.css — Road Ready JA
-   Sidebar + main layout. Same IBM Plex dark system as auth.css.
-   Layout inspired by the reference images provided.
-   ============================================================ */
-
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap");
 
 /* ── Variables ───────────────────────────────────────────── */
@@ -24,6 +18,21 @@
   --tr: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   --sidebar-w: 220px;
   --topbar-h: 52px;
+}
+
+
+[data-theme="light"] {
+  --bg: #f5f5f0;
+  --surface: #ffffff;
+  --surface-2: #f0f0eb;
+  --border: #d0d0c8;
+  --accent: #c9a000;
+  --accent-dim: #a88500;
+  --text: #1a1a1a;
+  --text-muted: #5a5a5a;
+  --text-subtle: #8a8a8a;
+  --error: #c94444;
+  --success: #3d9970;
 }
 
 /* ── Reset ───────────────────────────────────────────────── */
@@ -147,6 +156,7 @@ body {
   min-width: 16px;
   text-align: center;
 }
+
 .nav-item__badge[data-count="0"] {
   display: none;
 }
@@ -222,6 +232,7 @@ body {
     border-color var(--tr),
     color var(--tr);
 }
+
 .sidebar__signout:hover {
   border-color: var(--error);
   color: var(--error);
@@ -257,6 +268,7 @@ body {
   color: var(--text-muted);
   letter-spacing: 0.04em;
 }
+
 .topbar__breadcrumb strong {
   color: var(--text);
   font-weight: 600;
@@ -282,6 +294,7 @@ body {
     border-color var(--tr),
     color var(--tr);
 }
+
 .topbar__icon-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
@@ -301,6 +314,7 @@ body {
   min-width: 14px;
   text-align: center;
 }
+
 .topbar__badge[data-count="0"] {
   display: none;
 }
@@ -401,6 +415,7 @@ body {
   flex: 1;
   min-width: 0;
 }
+
 .panel--fixed {
   width: 280px;
   flex-shrink: 0;
@@ -435,6 +450,7 @@ body {
   cursor: pointer;
   transition: color var(--tr);
 }
+
 .panel__clear:hover {
   color: var(--error);
 }
@@ -455,6 +471,7 @@ body {
   font-size: 0.8rem;
   animation: fadeUp 0.22s ease both;
 }
+
 .activity-list li:last-child {
   border-bottom: none;
 }
@@ -485,11 +502,13 @@ body {
   flex: 1;
   min-width: 0;
 }
+
 .activity-body strong {
   color: var(--text);
   font-size: 0.8rem;
   display: block;
 }
+
 .activity-time {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -517,9 +536,11 @@ body {
     color var(--tr);
   cursor: pointer;
 }
+
 .action-item:last-child {
   border-bottom: none;
 }
+
 .action-item:hover {
   background: var(--surface-2);
   color: var(--text);
@@ -536,6 +557,7 @@ body {
     color var(--tr),
     transform var(--tr);
 }
+
 .action-item:hover .action-item__arrow {
   color: var(--accent);
   transform: translateX(3px);
@@ -606,6 +628,7 @@ body {
   background: rgba(0, 0, 0, 0.45);
   z-index: 299;
 }
+
 .notif-overlay.open {
   display: block;
 }
@@ -623,6 +646,7 @@ body {
   flex-direction: column;
   transition: right 0.3s var(--tr);
 }
+
 .notif-drawer.open {
   right: 0;
 }
@@ -650,6 +674,7 @@ body {
   font-size: 0.8rem;
   transition: color var(--tr);
 }
+
 .notif-drawer__close:hover {
   color: var(--error);
 }
@@ -667,9 +692,11 @@ body {
   color: var(--text-muted);
   line-height: 1.5;
 }
+
 .notif-list li:last-child {
   border-bottom: none;
 }
+
 .notif-list__empty {
   color: var(--text-subtle);
   font-family: var(--font-mono);
@@ -715,10 +742,12 @@ body {
   white-space: nowrap;
   pointer-events: none;
 }
+
 .toast.toast--visible {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
 .toast.toast--error {
   background: var(--error);
 }
@@ -729,6 +758,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -739,13 +769,16 @@ body {
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 2px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-subtle);
 }
@@ -769,6 +802,7 @@ body {
     border-color var(--tr),
     color var(--tr);
 }
+
 .sidebar-toggle:hover {
   border-color: var(--accent);
   color: var(--accent);
@@ -782,11 +816,13 @@ body {
   background: rgba(0, 0, 0, 0.55);
   z-index: 149;
 }
+
 .sidebar-overlay.open {
   display: block;
 }
 
 @media (max-width: 900px) {
+
   /* Body stays flex but sidebar becomes a drawer */
   body {
     flex-direction: column;
@@ -804,6 +840,7 @@ body {
     transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
   }
+
   .sidebar.open {
     left: 0;
   }
@@ -859,12 +896,14 @@ body {
     width: 100%;
     right: -100%;
   }
+
   .notif-drawer.open {
     right: 0;
   }
 }
 
 @media (max-width: 600px) {
+
   /* ── Stat cards: single column on phone ── */
   .stats-row {
     grid-template-columns: 1fr;

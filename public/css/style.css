@@ -7,23 +7,43 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
 
 /* ── Variables ───────────────────────────────────────────── */
+
+
 :root {
   --bg: #1a1a1a;
   --surface: #242424;
   --surface-2: #2e2e2e;
   --border: #3a3a3a;
   --accent: #f3c511;
-  /* brand yellow */
   --accent-dim: #d9a800;
   --green: #077333;
-  /* brand green */
   --green-dim: #055a28;
   --text: #e8e3dc;
   --text-muted: #8a857e;
   --text-subtle: #5a5550;
+  --error: #e05555;
+  --success: #4caf87;
+
   --font-ui: "IBM Plex Sans", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
   --tr: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode*/
+[data-theme="light"] {
+  --bg: #f5f5f0;
+  --surface: #ffffff;
+  --surface-2: #f0f0eb;
+  --border: #d0d0c8;
+  --accent: #c9a000;
+  --accent-dim: #a88500;
+  --green: #077333;
+  --green-dim: #055a28;
+  --text: #1a1a1a;
+  --text-muted: #5a5a5a;
+  --text-subtle: #8a8a8a;
+  --error: #c94444;
+  --success: #3d9970;
 }
 
 /* ── Reset ───────────────────────────────────────────────── */
@@ -136,6 +156,25 @@ a {
   transform: translateY(1px);
 }
 
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.22s, color 0.22s;
+  margin-left: 12px;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ══════════════════════════════════════════════════════════
    HERO
    ══════════════════════════════════════════════════════════ */
@@ -153,12 +192,10 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    100deg,
-    rgba(2, 2, 2, 0.85) 0%,
-    rgba(2, 2, 2, 0.55) 60%,
-    rgba(2, 2, 2, 0.2) 100%
-  );
+  background: linear-gradient(100deg,
+      rgba(2, 2, 2, 0.85) 0%,
+      rgba(2, 2, 2, 0.55) 60%,
+      rgba(2, 2, 2, 0.2) 100%);
 }
 
 .welcome-content {
@@ -851,6 +888,7 @@ a {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
@@ -959,6 +997,7 @@ a {
    RESPONSIVE — Mobile (≤ 480px)
    ══════════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
+
   /* ── Navbar ── */
   .navbar {
     padding: 0 16px;
@@ -1039,7 +1078,8 @@ a {
 
   /* Touch-friendly inputs */
   .cf-input {
-    font-size: 16px; /* prevents iOS zoom */
+    font-size: 16px;
+    /* prevents iOS zoom */
     padding: 0.75rem 0.85rem;
   }
 
