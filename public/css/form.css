@@ -68,6 +68,25 @@ body {
   z-index: 100;
 }
 
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.22s, color 0.22s;
+  margin-left: 12px;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .topbar__brand {
   font-family: var(--font-mono);
   font-size: 0.72rem;

@@ -46,6 +46,24 @@ body {
 
 /* ── Top nav (inline in HTML) ────────────────────────────── */
 /* Inherits correctly via CSS variables set above */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.22s, color 0.22s;
+  margin-left: 12px;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
 /* ── Page layout ─────────────────────────────────────────── */
 .app-layout {
@@ -207,6 +225,7 @@ body {
 .field-select:focus {
   border-color: var(--accent);
 }
+
 .field-select option {
   background: var(--surface);
   color: var(--text);
@@ -317,6 +336,7 @@ body {
     border-color var(--transition),
     transform 0.1s;
 }
+
 .btn:active {
   transform: translateY(1px);
 }
@@ -325,9 +345,11 @@ body {
   background: var(--accent);
   color: #1a1a1a;
 }
+
 .btn-primary:hover {
   background: var(--accent-dim);
 }
+
 .btn-primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -338,6 +360,7 @@ body {
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
+
 .btn-ghost:hover {
   border-color: var(--accent);
   color: var(--text);
@@ -372,12 +395,15 @@ body {
   .app-grid {
     grid-template-columns: 1fr;
   }
+
   .app-layout {
     padding: 2rem 1.2rem 4rem;
   }
+
   .app-submit {
     flex-direction: column-reverse;
   }
+
   .app-submit .btn {
     width: 100%;
   }
@@ -388,6 +414,7 @@ body {
    ══════════════════════════════════════════════════════════ */
 
 @media (max-width: 480px) {
+
   /* ── Layout tighter on small phones ── */
   .app-layout {
     padding: 1.5rem 1rem 3rem;
@@ -415,7 +442,8 @@ body {
   .field-input,
   .field-select {
     padding: 0.75rem 0.85rem;
-    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    font-size: 16px;
+    /* prevents iOS auto-zoom on focus */
   }
 
   /* Override right-padding for select arrow */
