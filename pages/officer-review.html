@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Officer Review — Road Ready JA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #020202;
+      --green: #077333;
+      --green-light: #0a9c44;
+      --yellow: #F3C511;
+      --white: #FFFFFF;
+      --grey: #f5f5f3;
+      --mid: #888;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--grey); color: var(--black); min-height: 100vh; }
+
+    /* SIDEBAR LAYOUT */
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 220px;
+      background: var(--black);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-logo {
+      padding: 1.5rem 1.25rem 1rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+      border-bottom: 1px solid #1e1e1e;
+    }
+    .sidebar-logo span { color: var(--yellow); }
+    .sidebar-role {
+      padding: 0.5rem 1.25rem 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .sidebar-nav { padding: 0.5rem 0; flex: 1; }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.25rem;
+      font-size: 0.82rem;
+      color: #666;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .sidebar-nav a:hover { color: var(--white); background: #111; }
+    .sidebar-nav a.active { color: var(--white); background: #111; border-left: 3px solid var(--green); }
+    .sidebar-nav .nav-section {
+      padding: 1rem 1.25rem 0.4rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #333;
+    }
+    .badge-count {
+      margin-left: auto;
+      background: var(--yellow);
+      color: var(--black);
+      font-size: 0.6rem;
+      font-weight: 800;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* MAIN */
+    .main { flex: 1; overflow: hidden; }
+
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid #eee;
+      padding: 0 2rem;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar h2 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .officer-info { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--mid); }
+    .officer-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .content { padding: 2rem; }
+
+    /* STATS */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid #eee;
+    }
+    .stat-card .sc-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-card .sc-num.green { color: var(--green); }
+    .stat-card .sc-num.yellow { color: #b88f00; }
+    .stat-card .sc-num.red { color: #c0392b; }
+    .stat-card .sc-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-btn {
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1.5px solid #ddd;
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .filter-btn:hover { border-color: var(--green); color: var(--green); }
+    .filter-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+    .filter-bar input {
+      margin-left: auto;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1.5px solid #ddd;
+      font-size: 0.78rem;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .filter-bar input:focus { border-color: var(--green); }
+
+    /* APPLICATION TABLE */
+    .table-wrap {
+      background: var(--white);
+      border-radius: 14px;
+      border: 1px solid #eee;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      text-align: left;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      background: #fafafa;
+      border-bottom: 1px solid #eee;
+      font-weight: 600;
+    }
+    tbody tr {
+      border-bottom: 1px solid #f5f5f5;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+    tbody td { padding: 1rem 1.25rem; font-size: 0.83rem; }
+    .td-name { font-weight: 600; }
+    .td-ref { font-family: monospace; font-size: 0.75rem; color: var(--mid); }
+
+    .chip {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .chip.pending   { background: #f0f0f0; color: #555; }
+    .chip.in-review { background: #fff8d6; color: #9a7000; }
+    .chip.approved  { background: #d4f2e3; color: var(--green); }
+    .chip.rejected  { background: #ffe4e4; color: #c0392b; }
+
+    .btn-row { display: flex; gap: 0.4rem; }
+    .btn-sm {
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+    }
+    .btn-approve { background: #d4f2e3; color: var(--green); }
+    .btn-approve:hover { background: var(--green); color: var(--white); }
+    .btn-reject { background: #ffe4e4; color: #c0392b; }
+    .btn-reject:hover { background: #c0392b; color: var(--white); }
+    .btn-view { background: #f0f0f0; color: #555; }
+    .btn-view:hover { background: #ddd; }
+
+    /* REVIEW MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 1rem;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 560px;
+      overflow: hidden;
+      animation: modalIn 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--mid); }
+    .modal-body { padding: 1.5rem; }
+    .doc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .doc-row:last-child { border-bottom: none; }
+    .doc-name { font-size: 0.82rem; font-weight: 500; }
+    .doc-status { font-size: 0.72rem; }
+    .doc-status.ok { color: var(--green); }
+    .doc-status.warn { color: #b88f00; }
+    .modal-actions {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+    .btn-modal {
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-modal.approve { background: var(--green); color: var(--white); }
+    .btn-modal.reject  { background: #c0392b; color: var(--white); }
+    .btn-modal.cancel  { background: #f0f0f0; color: #555; }
+    .notes-area {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border: 1.5px solid #eee;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      resize: vertical;
+      outline: none;
+    }
+    .notes-area:focus { border-color: var(--green); }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Road<span>Ready</span> JA</div>
+    <div class="sidebar-role">TAJ Officer Portal</div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Applications</div>
+      <a href="#" class="active">📋 Review Queue <span class="badge-count">7</span></a>
+      <a href="#">✅ Approved</a>
+      <a href="#">❌ Rejected</a>
+      <div class="nav-section">Tools</div>
+      <a href="verification.html">🔍 Verify Licence</a>
+      <a href="#">📊 Reports</a>
+      <div class="nav-section">Account</div>
+      <a href="#">⚙ Settings</a>
+      <a href="../index.html">← Back to Site</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <h2>Application Review Queue</h2>
+      <div class="officer-info">
+        <span>Officer K. Williams</span>
+        <div class="officer-avatar">KW</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="sc-num yellow">7</div>
+          <div class="sc-label">Pending Review</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-num green">34</div>
+          <div class="sc-label">Approved Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-num red">3</div>
+          <div class="sc-label">Rejected Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-num">44</div>
+          <div class="sc-label">Total This Week</div>
+        </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="filter-bar">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Pending</button>
+        <button class="filter-btn">In Review</button>
+        <button class="filter-btn">New Licence</button>
+        <button class="filter-btn">Renewal</button>
+        <input type="text" placeholder="Search by name or ref…" />
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Applicant</th>
+              <th>Type</th>
+              <th>Submitted</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="openModal('John D. Brown','REF-2026-00142','New Licence')">
+              <td class="td-ref">REF-2026-00142</td>
+              <td class="td-name">John D. Brown</td>
+              <td>New Licence</td>
+              <td>3 Mar 2026</td>
+              <td><span class="chip in-review">In Review</span></td>
+              <td onclick="event.stopPropagation()">
+                <div class="btn-row">
+                  <button class="btn-sm btn-view" onclick="openModal('John D. Brown','REF-2026-00142','New Licence')">View</button>
+                  <button class="btn-sm btn-approve" onclick="alert('Approved!')">Approve</button>
+                  <button class="btn-sm btn-reject" onclick="alert('Rejected.')">Reject</button>
+                </div>
+              </td>
+            </tr>
+            <tr onclick="openModal('Alicia M. Reid','REF-2026-00139','Renewal')">
+              <td class="td-ref">REF-2026-00139</td>
+              <td class="td-name">Alicia M. Reid</td>
+              <td>Renewal</td>
+              <td>2 Mar 2026</td>
+              <td><span class="chip pending">Pending</span></td>
+              <td onclick="event.stopPropagation()">
+                <div class="btn-row">
+                  <button class="btn-sm btn-view" onclick="openModal('Alicia M. Reid','REF-2026-00139','Renewal')">View</button>
+                  <button class="btn-sm btn-approve" onclick="alert('Approved!')">Approve</button>
+                  <button class="btn-sm btn-reject" onclick="alert('Rejected.')">Reject</button>
+                </div>
+              </td>
+            </tr>
+            <tr onclick="openModal('Devon C. Jackson','REF-2026-00136','New Licence')">
+              <td class="td-ref">REF-2026-00136</td>
+              <td class="td-name">Devon C. Jackson</td>
+              <td>New Licence</td>
+              <td>1 Mar 2026</td>
+              <td><span class="chip pending">Pending</span></td>
+              <td onclick="event.stopPropagation()">
+                <div class="btn-row">
+                  <button class="btn-sm btn-view" onclick="openModal('Devon C. Jackson','REF-2026-00136','New Licence')">View</button>
+                  <button class="btn-sm btn-approve" onclick="alert('Approved!')">Approve</button>
+                  <button class="btn-sm btn-reject" onclick="alert('Rejected.')">Reject</button>
+                </div>
+              </td>
+            </tr>
+            <tr onclick="openModal('Sandra P. Thomas','REF-2026-00133','Renewal')">
+              <td class="td-ref">REF-2026-00133</td>
+              <td class="td-name">Sandra P. Thomas</td>
+              <td>Renewal</td>
+              <td>28 Feb 2026</td>
+              <td><span class="chip pending">Pending</span></td>
+              <td onclick="event.stopPropagation()">
+                <div class="btn-row">
+                  <button class="btn-sm btn-view" onclick="openModal('Sandra P. Thomas','REF-2026-00133','Renewal')">View</button>
+                  <button class="btn-sm btn-approve" onclick="alert('Approved!')">Approve</button>
+                  <button class="btn-sm btn-reject" onclick="alert('Rejected.')">Reject</button>
+                </div>
+              </td>
+            </tr>
+            <tr onclick="openModal('Marcus L. Wright','REF-2026-00130','New Licence')">
+              <td class="td-ref">REF-2026-00130</td>
+              <td class="td-name">Marcus L. Wright</td>
+              <td>New Licence</td>
+              <td>27 Feb 2026</td>
+              <td><span class="chip in-review">In Review</span></td>
+              <td onclick="event.stopPropagation()">
+                <div class="btn-row">
+                  <button class="btn-sm btn-view" onclick="openModal('Marcus L. Wright','REF-2026-00130','New Licence')">View</button>
+                  <button class="btn-sm btn-approve" onclick="alert('Approved!')">Approve</button>
+                  <button class="btn-sm btn-reject" onclick="alert('Rejected.')">Reject</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Review Application</h3>
+      <button class="modal-close" onclick="document.getElementById('modalOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.8rem;color:var(--mid);margin-bottom:1rem;" id="modal-sub">REF-2026-00142 · New Licence</p>
+      <div class="doc-row">
+        <span class="doc-name">📄 National ID / Passport</span>
+        <span class="doc-status ok">✓ Uploaded</span>
+      </div>
+      <div class="doc-row">
+        <span class="doc-name">📄 Medical Certificate</span>
+        <span class="doc-status warn">⚠ Needs Re-upload</span>
+      </div>
+      <div class="doc-row">
+        <span class="doc-name">📄 Provisional Licence</span>
+        <span class="doc-status ok">✓ Uploaded</span>
+      </div>
+      <div class="doc-row">
+        <span class="doc-name">🖼 Passport Photo</span>
+        <span class="doc-status ok">✓ Uploaded</span>
+      </div>
+      <div class="doc-row">
+        <span class="doc-name">💳 Payment</span>
+        <span class="doc-status ok">✓ Confirmed — JMD 3,500</span>
+      </div>
+      <textarea class="notes-area" rows="3" placeholder="Add review notes (optional)…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal cancel" onclick="document.getElementById('modalOverlay').classList.remove('show')">Cancel</button>
+      <button class="btn-modal reject" onclick="alert('Application rejected.');document.getElementById('modalOverlay').classList.remove('show')">Reject</button>
+      <button class="btn-modal approve" onclick="alert('Application approved!');document.getElementById('modalOverlay').classList.remove('show')">Approve</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(name, ref, type) {
+    document.getElementById('modal-title').textContent = name;
+    document.getElementById('modal-sub').textContent = ref + ' · ' + type;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) {
+      document.getElementById('modalOverlay').classList.remove('show');
+    }
+  }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
